@@ -1,0 +1,14 @@
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.rest-assured:rest-assured'
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+    testImplementation "com.github.epam-valerii:producer-contact-tests:+:stubs"
+}
+
+compileJava.dependsOn project(':producer-contact-tests').build

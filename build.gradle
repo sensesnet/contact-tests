@@ -1,0 +1,48 @@
+plugins {
+    id "java"
+    id "io.freefair.lombok" version "4.1.2" apply false
+    id "org.springframework.boot" version "2.2.2.RELEASE" apply false
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+}
+
+ext['junit-jupiter.version'] = '5.5.2'
+ext['mockito.version'] = '3.2.4'
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "io.freefair.lombok"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+
+    group 'com.github.epam-valerii'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = 1.8
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE'
+        }
+    }
+
+    dependencies {
+        implementation "org.springframework.boot:spring-boot-starter-web"
+//        implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    generateLombokConfig.enabled false
+}
+
+//project(':consumer-contract-tests').build.dependsOn project(':producer-contact-tests').build

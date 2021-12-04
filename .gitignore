@@ -1,0 +1,12 @@
+.idea*
+.gradle*
+build/
+.project
+.settings
+*iml
+out*
+sonar_home*
+logs*
+var*
+
+gradle.properties

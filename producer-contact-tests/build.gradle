@@ -1,0 +1,29 @@
+plugins {
+    id 'groovy'
+    id "org.springframework.cloud.contract" version "2.2.1.RELEASE"
+}
+
+import org.springframework.cloud.contract.verifier.config.TestFramework
+
+dependencies {
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    implementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.2.RELEASE'
+    testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: '2.2.3.RELEASE'
+}
+/*
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-security', version: '1.5.13'
+    implementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.2.RELEASE'
+    testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock', version: '2.2.3.RELEASE'
+ */
+contracts {
+    testFramework = TestFramework.JUNIT5
+    packageWithBaseClasses = 'producer'
+}
+
+task copyStubJar(type: Copy) {
+    from verifierStubsJar
+    into '../libs'
+}
+
+build.dependsOn copyStubJar
